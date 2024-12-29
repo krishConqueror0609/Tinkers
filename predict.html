@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make a Prediction</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS for extra styling -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .form-control {
+            margin-bottom: 10px;
+        }
+        .alert {
+            margin-top: 20px;
+        }
+        h2, h3 {
+            color: #333;
+        }
+        .navbar {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Prediction App</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('prediction_history') }}">Prediction History</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Enter Features for Prediction</h2>
+
+        <form method="POST" class="form-group">
+            <label for="BehavioralProblems">Behavioral Problems (0 or 1):</label>
+            <input type="text" id="BehavioralProblems" name="BehavioralProblems" class="form-control" required>
+
+            <label for="MemoryComplaints">Memory Complaints (0 or 1):</label>
+            <input type="text" id="MemoryComplaints" name="MemoryComplaints" class="form-control" required>
+
+            <label for="FunctionalAssessment">Functional Assessment (numeric):</label>
+            <input type="text" id="FunctionalAssessment" name="FunctionalAssessment" class="form-control" required>
+
+            <label for="ADL">Activities of Daily Living (numeric):</label>
+            <input type="text" id="ADL" name="ADL" class="form-control" required>
+
+            <label for="MMSE">MMSE (numeric):</label>
+            <input type="text" id="MMSE" name="MMSE" class="form-control" required>
+
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+
+        {% if prediction_text %}
+            <div class="alert alert-info mt-3" role="alert">
+                <h3>Prediction Result: {{ prediction_text }}</h3>
+            </div>
+        {% endif %}
+
+        <p><a href="{{ url_for('home') }}" class="btn btn-link">Back to Home</a></p>
+
+        <!-- Flash messages for success/error -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="alert alert-warning">
+                    {% for category, message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Bootstrap and jQuery JS for interactivity -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
